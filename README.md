@@ -1,4 +1,19 @@
-## 基础组件
+# Ados
+ados基于vue和ElementUI，为敏捷开发提供辅助功能
+
+## 快速安装
+```npm
+yarn add git+https://github.com/llyb120/ados
+```
+将Ados的相关依赖添加入package.json中，由于使用了jsx，你需要额外加入对jsx的支持，可参考本项目中对jsx支持的配置
+
+```javascript
+import {Ados} from "ados"
+Vue.use(Ados)
+```
+
+
+## 基础容器
 提供 **list.frame** 以及 **dialog.frame**两个基础组件，后者通常不需要手动引入
 
 ```vue
@@ -119,7 +134,8 @@ const example = {
   render: xxx, //字段布局
   span: 24, //给editForm提供的栅格，总长为24
   value: (Object) => Object //通常，如果直接取值不能满足需求，该方法会触发，自定义一个取值显示规则,
-  data: Function | Object | Others
+  data: Function | Object | Others,
+  generator: Function //处于mock模式下，addForm的generator会自动帮助用户生成测试数据
 }
 ```
 可以用data属性定义默认的值，data接受3种参数，并返回一个包含scope和data的对象，例如
@@ -231,6 +247,31 @@ export class $Test2 extends Test {
 
 }
 ```
+
+## Mock
+多数时候，如果你并不是急于编写服务端，你可以使用ados提供的mock功能来制作一个原型，在options中加入mock参数，而正式上线的时候只需要取消mock即可
+```javascript
+export const options = {
+    mock:  {
+        name: "test",
+        // force: true,
+        api: {
+            "/api/test": function (){
+                //可在此定义你的api，mock的时候会自动调用    
+            },
+            /**
+             * 在create的时候附加字段
+             */
+            onCreate(data){
+            },
+            onPage(list){
+                //补充page的额外字段
+            }
+        }
+    }
+}
+```
+
 
 ## 其余说明
 任何时候，当你重写一个布局的时候，你都可以调用原布局（即t)上的render系列函数，来进行复用，例如
