@@ -26,6 +26,10 @@ const fixSession = (function() {
     });
 });
 
+import AdosPage from "./vue/ados-page"
+import AdosTable from "./vue/ados-table"
+import AdosSearch from "./vue/ados-search"
+
 export const Ados = {
 
     install: function (Vue){
@@ -34,5 +38,8 @@ export const Ados = {
 
         Vue.component("AdosList", ListFrame)
         Vue.component("AdosDialog", DialogFrame)
+        Vue.component("AdosPage", AdosPage)
+        Vue.component("AdosTable", AdosTable)
+        Vue.component("AdosSearch", AdosSearch)
     }
 }
